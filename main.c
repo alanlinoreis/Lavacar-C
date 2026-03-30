@@ -3,15 +3,15 @@
 #include <locale.h>
 
 //Struct para os carros
-struct Tcarro{
+typedef struct Tcarro{
   char modelo[30] ;
   char placa[30] ;
   char cor[30];
-};
+}Tcarro;
 
-//Funções
-int fun_decre(int *);
-int fun_incre(int *);
+//Definição do escopo das funções para implementação
+void fun_decre(int *);
+void fun_incre(int *);
 void flush_in ();
 float calcValor (float preco, float qtd);
 int fun_invalidos (float prEta, float prGas, float prAdit, float tFila);
@@ -22,9 +22,9 @@ char Fun_Tcar();
 int main (void) {
 
   //VARIÁVEIS
-	float  prEta = 1, prGas = 1, prAdit = 1, qtdEta, qtdGas, qtdAdit, valRec, cAtendido, tFila = 1;
+	float  prEta, prGas, prAdit, qtdEta, qtdGas, qtdAdit, valRec, cAtendido;
   float etaRestante = 200, gasRestante = 200, aditRestante = 200;
-  int fila = 0, opcao, relatorio, menu, tam, cont = 1;
+  int fila = 0, tFila = 1, relatorio, menu, cont = 0;
 
   printf("---------------------------------------------------------------------------------------------------------\n");
   printf("Bem vindo ao programa de abastecimento do posto de gasolina! Nosso programa facilita o abastecimento para nossos clientes.\n\n                     \n");
@@ -43,24 +43,24 @@ int main (void) {
 	scanf  ("%f", &prAdit);
 	
   printf("\nInforme o tamanho da fila que o estabelecimento suportará: ");
-  scanf  ("%2f", &tFila);
+  scanf  ("%d", &tFila);
   
   }
   while (prEta < 0 || prGas < 0 || prAdit < 0 || tFila <= 0);
 
-  struct Tcarro carros [tam];
+  Tcarro carros[tFila];
   do {
 
-  menu = fun_escreva ();
+  menu = fun_escreva();
   
   switch (menu){
     case 1:
       system("clear");
-      if (fila <= tFila) {
+      if (fila < tFila) {
         fun_incre(&fila);
         flush_in ();
         
-
+        printf("Tfila = %d\n\n", tFila);
         printf("\nDigite o modelo do carro:\n ");
         fgets(carros[cont].modelo,30,stdin);
               
@@ -144,6 +144,10 @@ int main (void) {
           printf ("%.2f litros restante de Etanol\n %.2f litros restante de Gasolina Comum\n %.2f litros restante de Gasolina Aditivada", etaRestante, gasRestante, aditRestante);
           break;
         
+        case 5:
+          system("clear");
+          break;
+
         default:
           printf("Opção inválida\n"); 
       }
@@ -164,7 +168,7 @@ int main (void) {
 	return 0;
 }
 
-//Funções
+//IMPLEMENTAÇÃO DAS FUNÇÕES
 float calcValor (float preco, float qtd) {
 	return preco*qtd;
 }
@@ -181,7 +185,9 @@ int fun_invalidos (float prEta, float prGas, float prAdit, float tFila) {
   return 0;
 }
 
-int fun_escreva (int opcao) {
+//Menu principal do programa
+int fun_escreva () {
+  int opcao;
   printf("\nPrograma para melhor experência dos clientes do posto de gasolina\n");
   printf("------------------------------------------------------------------\n");
   printf("1 - Adicionar um carro na fila\n2 - Abastecimento\n3 - Chamar o próximo\n4 - Relatórios\n5 - Encerrar\n");
@@ -196,14 +202,12 @@ void flush_in(){
     while( (ch = fgetc(stdin)) != EOF && ch != '\n' ){} 
 }
 
-int fun_incre (int *fila){
+void fun_incre (int *fila){
   *fila = *fila + 1;
   printf ("Número de carros na fila: %d\n", *fila);
- return *fila;
-    }
+}
 
-int fun_decre (int *fila){
+void fun_decre (int *fila){
   *fila = *fila - 1;
   printf ("Número de carros na fila: %d\n", *fila);
- return *fila;
  }
