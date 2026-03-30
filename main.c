@@ -22,9 +22,9 @@ char Fun_Tcar();
 int main (void) {
 
   //VARIÁVEIS
-	float  prEta, prGas, prAdit, qtdEta, qtdGas, qtdAdit, valRec, cAtendido;
+	float  prEta, prGas, prAdit, qtdEta, qtdGas, qtdAdit, valRec;
   float etaRestante = 200, gasRestante = 200, aditRestante = 200;
-  int fila = 0, tFila = 1, relatorio, menu, cont = 0;
+  int fila = 0, tFila = 1, relatorio, menu, cont = 0, cAtendido = 0;
 
   printf("---------------------------------------------------------------------------------------------------------\n");
   printf("Bem vindo ao programa de abastecimento do posto de gasolina! Nosso programa facilita o abastecimento para nossos clientes.\n\n                     \n");
@@ -60,7 +60,6 @@ int main (void) {
         fun_incre(&fila);
         flush_in ();
         
-        printf("Tfila = %d\n\n", tFila);
         printf("\nDigite o modelo do carro:\n ");
         fgets(carros[cont].modelo,30,stdin);
               
@@ -97,7 +96,7 @@ int main (void) {
       	aditRestante = aditRestante - qtdAdit;
         
         cAtendido = cAtendido + 1;
-        printf("\nCarros atendidos: %.f\n", cAtendido);
+        printf("\nCarros atendidos: %d\n", cAtendido);
         printf("Carro abastecido\n");
         fun_decre(&fila);
         } else {
@@ -136,7 +135,7 @@ int main (void) {
         
         case 3:
           system("clear");system("clear");
-          printf ("%.f carros foram atendidos\n", cAtendido);
+          printf ("%d carros foram atendidos\n", cAtendido);
           break;
         
         case 4:
@@ -168,11 +167,14 @@ int main (void) {
 	return 0;
 }
 
-//IMPLEMENTAÇÃO DAS FUNÇÕES
+//IMPLEMENTAÇÃO DAS FUNÇÕES=======================
+
+//calcula o valor do preço total da venda do combustível
 float calcValor (float preco, float qtd) {
 	return preco*qtd;
 }
 
+//função que checa se os valores de etanol, gasolina, gasolina aditivada e tamanho da fila estão válidos para o sistema funcionar
 int fun_invalidos (float prEta, float prGas, float prAdit, float tFila) {
   if (prEta < 0) 
      printf("\nValor do preço do Etanol inválido!\nDigite o preço novamente\n");
@@ -197,16 +199,19 @@ int fun_escreva () {
   return opcao;
 }
 
+//função de limpeza do buffer para evitar lixo nas variáveis
 void flush_in(){ 
     int ch;
     while( (ch = fgetc(stdin)) != EOF && ch != '\n' ){} 
 }
 
+//incrementa fila de carros
 void fun_incre (int *fila){
   *fila = *fila + 1;
   printf ("Número de carros na fila: %d\n", *fila);
 }
 
+//decrementa fila de carros
 void fun_decre (int *fila){
   *fila = *fila - 1;
   printf ("Número de carros na fila: %d\n", *fila);
