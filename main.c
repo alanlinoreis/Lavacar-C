@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <locale.h>
 
-//Struct para os carros
 typedef struct Tcarro{
   char modelo[30] ;
   char placa[30] ;
@@ -18,11 +17,12 @@ int fun_invalidos (float prEta, float prGas, float prAdit, float tFila);
 int fun_escreva();
 char Fun_Tcar();
 
-//MAIN
 int main (void) {
 
-  //VARIÁVEIS
+  //Quantidade de variáveis em excesso, algumas poderiam ser criadas apenas no escopo da função
 	float  prEta, prGas, prAdit, qtdEta, qtdGas, qtdAdit, valRec;
+  //Opção de melhoria, inserir manualmente a quantidade de combustivel ou possivel integração com um sistema de gerenciamento de quantidade
+
   float etaRestante = 200, gasRestante = 200, aditRestante = 200;
   int fila = 0, tFila = 1, relatorio, menu, cont = 0, cAtendido = 0;
 
@@ -31,6 +31,8 @@ int main (void) {
   printf("---------------------------------------------------------------------------------------------------------\n");
   
   do {
+    // dentro fun_invalidos deveria-se checar se a a atribuição de valores correspondentes ao seu tipo, já que dentro do loop já é checado se os valores são negativos ou válidos
+    // deveria-se identificar os valores individualmente, para que não seja necessário digitar a mesma informação mais de uma vez mesmo que ela esteja correta
   fun_invalidos(prEta, prGas, prAdit, tFila);
     
 	printf ("\nDigite o preço do etanol: ");
@@ -79,6 +81,7 @@ int main (void) {
         }
     break;
     
+    // Opção para atualizações futuras, poder selecionar um tipo de combustivel por vez
     case 2:
       system("clear");
 
