@@ -1,5 +1,5 @@
 # Lavacar-C
-Revisão de Código — Sistema Lava-Carros (C)
+Revisão de Código — Sistema Lava-Carros (C).
 Integrantes:
 Hilário Canci Neto e Alan Lino Reis.
 
